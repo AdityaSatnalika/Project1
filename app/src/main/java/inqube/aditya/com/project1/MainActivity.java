@@ -53,30 +53,36 @@ public class MainActivity extends AppCompatActivity
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
 
-            SharedPreferences app_preferences;
+
+            final customadapter whatever = new customadapter(this, nameArray, infoArray, imageArray);
+            final SharedPreferences app_preferences;
             app_preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-            ccount = app_preferences.getInt("ccount",0);
-            pcount = app_preferences.getInt("pcount",0);
-            wcount = app_preferences.getInt("wcount",0);
-            Lcount = app_preferences.getInt("Lcount",0);
-            Gcount = app_preferences.getInt("Gcount",0);
-
-            infoArray[0]="The Count is :"+ pcount;
-            infoArray[1]="The Count is :"+ ccount;
-            infoArray[2]="The Count is :"+ wcount;
-            infoArray[3]="The Count is :"+ Lcount;
-
-            infoArray[4]="The Count is :"+ Gcount;
+            SharedPreferences.OnSharedPreferenceChangeListener myPrefListner = new SharedPreferences.OnSharedPreferenceChangeListener(){
+                public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 
 
 
+                    ccount = app_preferences.getInt("ccount",0);
+                    pcount = app_preferences.getInt("pcount",0);
+                    wcount = app_preferences.getInt("wcount",0);
+                    Lcount = app_preferences.getInt("Lcount",0);
+                    Gcount = app_preferences.getInt("Gcount",0);
+
+                    infoArray[0]="The Count is :"+ pcount;
+                    infoArray[1]="The Count is :"+ ccount;
+                    infoArray[2]="The Count is :"+ wcount;
+                    infoArray[3]="The Count is :"+ Lcount;
+                    infoArray[4]="The Count is :"+ Gcount;
+
+                    listView = (ListView) findViewById(R.id.listview);
+                    listView.setAdapter(whatever);
+                    requestPermission();
+                }
+            };
 
 
-            customadapter whatever = new customadapter(this, nameArray, infoArray, imageArray);
-            listView = (ListView) findViewById(R.id.listview);
-            listView.setAdapter(whatever);
-            requestPermission();
+
 
 
         }
@@ -125,32 +131,8 @@ public class MainActivity extends AppCompatActivity
     listView.setAdapter(whatever);
 
 }
-    public void onVisible() {
 
-        super.onStart();
-        super.onResume();
 
-        SharedPreferences app_preferences;
-        app_preferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        ccount = app_preferences.getInt("ccount", 0);
-        pcount = app_preferences.getInt("pcount", 0);
-        wcount = app_preferences.getInt("wcount", 0);
-        Lcount = app_preferences.getInt("Lcount", 0);
-        Gcount = app_preferences.getInt("Gcount", 0);
-
-        infoArray[0] = "The Count is :" + pcount;
-        infoArray[1] = "The Count is :" + ccount;
-        infoArray[2] = "The Count is :" + wcount;
-        infoArray[3] = "The Count is :" + Lcount;
-
-        infoArray[4] = "The Count is :" + Gcount;
-
-        customadapter whatever = new customadapter(this, nameArray, infoArray, imageArray);
-        listView = (ListView) findViewById(R.id.listview);
-        listView.setAdapter(whatever);
-
-    }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
