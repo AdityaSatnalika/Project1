@@ -23,6 +23,7 @@
             android:id="@+id/nameTextViewID"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
+            android:textColor="#fff"
             android:layout_centerHorizontal="true"
             android:text="This Is Heading" />
 
@@ -30,7 +31,11 @@
             android:id="@+id/infoTextViewID"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
-            android:text="This is Description heading" />
+            android:textColor="#fff"
+
+            android:text="This is Description heading"
+            />
+
     </LinearLayout>
 
 </LinearLayout>

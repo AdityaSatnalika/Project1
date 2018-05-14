@@ -24,37 +24,39 @@ public class wifi extends BroadcastReceiver
 
 
         NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
-        SharedPreferences app_preferences;
-        app_preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        wcount = app_preferences.getInt("wcount",0);
-        SharedPreferences.Editor editor = app_preferences.edit();
-        editor.putInt("wcount",++wcount);
 
-        editor.commit();
 
-        int extraWifiState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE ,
-                WifiManager.WIFI_STATE_UNKNOWN);
+        int extraWifiState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE , WifiManager.WIFI_STATE_UNKNOWN);
 
         switch(extraWifiState)
         {
             case WifiManager.WIFI_STATE_DISABLED:
-
                  break;
-                 case WifiManager.WIFI_STATE_DISABLING:
-                Toast.makeText(context, "WIFI STATE DISABLED" + wcount, Toast.LENGTH_LONG).show();
+
+            case WifiManager.WIFI_STATE_DISABLING:
+
+                Toast.makeText(context, "WIFI STATE DISABLED" , Toast.LENGTH_LONG).show();
 
                 break;
+
             case WifiManager.WIFI_STATE_ENABLED:
-                Toast.makeText(context, "WIFI STATE ENABLED" + wcount, Toast.LENGTH_LONG).show();
-
+                SharedPreferences app_preferences;
+                app_preferences = PreferenceManager.getDefaultSharedPreferences(context);
+                wcount = app_preferences.getInt("wcount",0);
+                SharedPreferences.Editor editor = app_preferences.edit();
+                editor.putInt("wcount",++wcount);
+                editor.commit();
+                Toast.makeText(context, "WIFI STATE ENABLED " + wcount, Toast.LENGTH_LONG).show();
                 break;
+
             case WifiManager.WIFI_STATE_ENABLING:
-                Toast.makeText(context, "WIFI STATE ENABLING" + wcount, Toast.LENGTH_LONG).show();
+
+                Toast.makeText(context, "WIFI STATE ENABLING" , Toast.LENGTH_LONG).show();
 
                 break;
-            case WifiManager.WIFI_STATE_UNKNOWN:
-                Toast.makeText(context, "WIFI STATE UNKNOWN" + wcount, Toast.LENGTH_LONG).show();
 
+            case WifiManager.WIFI_STATE_UNKNOWN:
+                Toast.makeText(context, "WIFI STATE UNKNOWN" , Toast.LENGTH_LONG).show();
                 break;
         }
     }

@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    tools:layout_margin="15dp">
+    android:background="@drawable/background"
+    >
 
 
     <ListView
@@ -15,22 +16,26 @@
         android:layout_width="match_parent"
         android:layout_height="391dp"
         tools:layout_margin="15dp">
-
     </ListView>
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="match_parent"
+        android:layout_width="301dp"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical|center_horizontal"
+        android:layout_margin="15dp"
+        android:background="@drawable/mybutton"
+        android:layout_gravity="center"
         android:onClick="startAlert"
         android:text="Start Timer" />
+
     <Button
         android:id="@+id/button3"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical|center_horizontal"
+        android:layout_gravity="center"
         android:onClick="reset"
+        android:layout_margin="15dp"
+        android:background="@drawable/mybutton"
         android:text="Reset Statistics" />
 
 </LinearLayout>

@@ -10,10 +10,10 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -40,12 +40,10 @@ public class MainActivity extends AppCompatActivity
             };
 
         Integer[] imageArray =
-            {R.drawable.ic_launcher_background,
-                    R.drawable.ic_launcher_background,
-                    R.drawable.ic_launcher_background,
-                    R.drawable.ic_launcher_background,
-                    R.drawable.ic_launcher_background,
-                    R.drawable.ic_launcher_background};
+            {R.drawable.phone,
+                    R.drawable.came,
+                    R.drawable.wifi,
+                     R.drawable.location};
     ListView listView;
 
     @Override
@@ -61,35 +59,18 @@ public class MainActivity extends AppCompatActivity
             final SharedPreferences app_preferences;
             app_preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-            SharedPreferences.OnSharedPreferenceChangeListener myPrefListner = new SharedPreferences.OnSharedPreferenceChangeListener(){
-                public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+            PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).registerOnSharedPreferenceChangeListener(
+                    new SharedPreferences.OnSharedPreferenceChangeListener() {
+                        @Override
+                        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
+                        {
+                            onResume();
+                            Log.i("_________", "testOnSharedPreferenceChangedWrong key =" + key);
+                        }
+                    });
 
+         }
 
-
-                    ccount = app_preferences.getInt("ccount",0);
-                    pcount = app_preferences.getInt("pcount",0);
-                    wcount = app_preferences.getInt("wcount",0);
-                    Lcount = app_preferences.getInt("Lcount",0);
-
-                    infoArray[0]="The Count is :"+ pcount;
-                    infoArray[1]="The Count is :"+ ccount;
-                    infoArray[2]="The Count is :"+ wcount;
-                    infoArray[3]="The Count is :"+ Lcount;
-
-                    listView = (ListView) findViewById(R.id.listview);
-                    listView.setAdapter(whatever);
-                    requestPermission();
-
-                    Intent intent =new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    sendBroadcast(intent);
-                }
-            };
-
-
-
-
-
-        }
         public void startAlert(View view){
           //  EditText text = (EditText) findViewById(R.id.time);
             int i =10; //Integer.parseInt(text.getText().toString());
