@@ -16,6 +16,11 @@ public class Receiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         String S = intent.getAction();
+        if (S == "") ;
+        {
+            Toast.makeText(context, "Received Broadcast", Toast.LENGTH_SHORT).show();
+
+        }
 
         if (S == "android.intent.action.PHONE_STATE")
         {

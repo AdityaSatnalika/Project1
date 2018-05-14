@@ -51,9 +51,9 @@ public class MainActivity extends AppCompatActivity
         {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
+
             startService(new Intent(this, newserviceclas.class));
-
-
+            requestPermission();
 
             final customadapter whatever = new customadapter(this, nameArray, infoArray, imageArray);
             final SharedPreferences app_preferences;
@@ -135,7 +135,6 @@ public class MainActivity extends AppCompatActivity
     listView.setAdapter(whatever);
 
 }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
