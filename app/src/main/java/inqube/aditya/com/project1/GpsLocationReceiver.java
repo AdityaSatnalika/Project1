@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import static inqube.aditya.com.project1.MainActivity.Lcount;
@@ -36,7 +37,7 @@ public class GpsLocationReceiver extends BroadcastReceiver {
             //Start your Activity if location was enabled:
             if (isGpsEnabled || isNetworkEnabled) {
                 Toast.makeText(context,"Both Enabled",Toast.LENGTH_LONG).show();
-
+                Log.i("_____________________","This is network");
             }
         }
     }

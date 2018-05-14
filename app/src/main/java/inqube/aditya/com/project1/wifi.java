@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import static inqube.aditya.com.project1.MainActivity.wcount;
@@ -47,6 +48,8 @@ public class wifi extends BroadcastReceiver
                 editor.putInt("wcount",++wcount);
                 editor.commit();
                 Toast.makeText(context, "WIFI STATE ENABLED " + wcount, Toast.LENGTH_LONG).show();
+                Log.i("_____________________","This is wifi");
+
                 break;
 
             case WifiManager.WIFI_STATE_ENABLING:

@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.READ_PHONE_STATE;
 
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity
 
         Integer[] imageArray =
             {R.drawable.phone,
-                    R.drawable.came,
+                    R.drawable.camera,
                     R.drawable.wifi,
                      R.drawable.location};
     ListView listView;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void requestPermission(){
-            ActivityCompat.requestPermissions(this, new String[]{READ_PHONE_STATE,READ_EXTERNAL_STORAGE, LOCATION_SERVICE}, permsRequestCode);
+            ActivityCompat.requestPermissions(this, new String[]{READ_PHONE_STATE,READ_EXTERNAL_STORAGE, ACCESS_FINE_LOCATION}, permsRequestCode);
 
     }
 
@@ -141,26 +142,27 @@ public class MainActivity extends AppCompatActivity
             case 200:
                 if (grantResults.length > 0) {
 
-                    boolean locationAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-                    boolean cameraAccepted = grantResults[2] == PackageManager.PERMISSION_GRANTED;
+                    boolean readexternal = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    boolean locationAccepted = grantResults[2] == PackageManager.PERMISSION_GRANTED;
                     boolean phoneAccepted=grantResults[0]==PackageManager.PERMISSION_GRANTED;
 
-                    if (locationAccepted && cameraAccepted && phoneAccepted)
+                    if (locationAccepted && readexternal && phoneAccepted)
                         Toast.makeText(this, "All Permission Granted.", Toast.LENGTH_LONG).show();
-                    else {
-
+                    else
+                        {
                         Toast.makeText(this, "Permission Denied.", Toast.LENGTH_LONG).show();
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                         {
-                            if (shouldShowRequestPermissionRationale(READ_EXTERNAL_STORAGE))
+                            if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION))
                             {
-                                showMessageOKCancel("You need to allow access to both the permissions",
-                                        new DialogInterface.OnClickListener() {
+                                showMessageOKCancel("You need to allow access to All the permissions",
+                                        new DialogInterface.OnClickListener()
+                                        {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                                    requestPermissions(new String[]{READ_PHONE_STATE,READ_EXTERNAL_STORAGE, LOCATION_SERVICE},
+                                                    requestPermissions(new String[]{READ_PHONE_STATE,READ_EXTERNAL_STORAGE, ACCESS_FINE_LOCATION},
                                                             permsRequestCode);
                                                 }
                                             }

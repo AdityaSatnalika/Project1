@@ -35,7 +35,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_photo_camera_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_linked_camera_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -56,9 +56,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="came" />
+                                      <entry key="outputName" value="camera" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="020201" />
+                                      <entry key="themeColor" value="b9b8b7" />
                                     </map>
                                   </option>
                                 </PersistentState>

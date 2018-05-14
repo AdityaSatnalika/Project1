@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import static inqube.aditya.com.project1.MainActivity.pcount;
@@ -35,6 +36,8 @@ public class Receiver extends BroadcastReceiver {
                 if (state.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
                     String incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
                     Toast.makeText(context, "Ringing State Number is -" + incomingNumber, Toast.LENGTH_SHORT).show();
+                    Log.i("_____________________","This is Phone");
+
                 }
                 if ((state.equals(TelephonyManager.EXTRA_STATE_OFFHOOK))) {
                     Toast.makeText(context, "Received State", Toast.LENGTH_SHORT).show();
