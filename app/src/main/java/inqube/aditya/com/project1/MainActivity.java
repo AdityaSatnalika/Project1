@@ -18,8 +18,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.READ_PHONE_STATE;
 
 public class MainActivity extends AppCompatActivity
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void requestPermission(){
-            ActivityCompat.requestPermissions(this, new String[]{READ_PHONE_STATE,ACCESS_FINE_LOCATION, CAMERA}, permsRequestCode);
+            ActivityCompat.requestPermissions(this, new String[]{READ_PHONE_STATE,READ_EXTERNAL_STORAGE, LOCATION_SERVICE}, permsRequestCode);
 
     }
 
@@ -154,14 +153,14 @@ public class MainActivity extends AppCompatActivity
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                         {
-                            if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION))
+                            if (shouldShowRequestPermissionRationale(READ_EXTERNAL_STORAGE))
                             {
                                 showMessageOKCancel("You need to allow access to both the permissions",
                                         new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                                    requestPermissions(new String[]{READ_PHONE_STATE,ACCESS_FINE_LOCATION, CAMERA},
+                                                    requestPermissions(new String[]{READ_PHONE_STATE,READ_EXTERNAL_STORAGE, LOCATION_SERVICE},
                                                             permsRequestCode);
                                                 }
                                             }
