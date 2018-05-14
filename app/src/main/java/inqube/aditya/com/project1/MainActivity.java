@@ -2,6 +2,7 @@ package inqube.aditya.com.project1;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -22,11 +24,11 @@ import static android.Manifest.permission.READ_PHONE_STATE;
 
 public class MainActivity extends AppCompatActivity
 {
-        public static int pcount=0,ccount=0,wcount=0,Lcount=0,Gcount=0,count=0;
-
+        public static int pcount=0,ccount=0,wcount=0,Lcount=0;
+        Context context=this;
         String[] perms = {"READ_PHONE_STATE", "android.permission.CAMERA"};
         int permsRequestCode = 200;
-        String[] nameArray = {"Phone","Camera","Wifi","Location","Gallery" };
+        String[] nameArray = {"Phone","Camera","Wifi","Location", };
 
         public static  String[] infoArray =
             {
@@ -34,8 +36,7 @@ public class MainActivity extends AppCompatActivity
                     "The Count is :"+ ccount,
                     "The Count is :" +wcount,
                     "The Count is :" +Lcount,
-                    "The Count is :" +Gcount,
-                    "The Count is :"+count
+
             };
 
         Integer[] imageArray =
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity
         {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
+            startService(new Intent(this, newserviceclas.class));
+
 
 
             final customadapter whatever = new customadapter(this, nameArray, infoArray, imageArray);
@@ -67,17 +70,18 @@ public class MainActivity extends AppCompatActivity
                     pcount = app_preferences.getInt("pcount",0);
                     wcount = app_preferences.getInt("wcount",0);
                     Lcount = app_preferences.getInt("Lcount",0);
-                    Gcount = app_preferences.getInt("Gcount",0);
 
                     infoArray[0]="The Count is :"+ pcount;
                     infoArray[1]="The Count is :"+ ccount;
                     infoArray[2]="The Count is :"+ wcount;
                     infoArray[3]="The Count is :"+ Lcount;
-                    infoArray[4]="The Count is :"+ Gcount;
 
                     listView = (ListView) findViewById(R.id.listview);
                     listView.setAdapter(whatever);
                     requestPermission();
+
+                    Intent intent =new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    sendBroadcast(intent);
                 }
             };
 
@@ -86,7 +90,7 @@ public class MainActivity extends AppCompatActivity
 
 
         }
-            public void startAlert(View view){
+        public void startAlert(View view){
           //  EditText text = (EditText) findViewById(R.id.time);
             int i =10; //Integer.parseInt(text.getText().toString());
 
@@ -100,7 +104,28 @@ public class MainActivity extends AppCompatActivity
 
             Toast.makeText(this, "Alarm set in " + i + " seconds",Toast.LENGTH_LONG).show();
         }
-            private void requestPermission(){
+        public void reset(View view){
+            SharedPreferences app_preferences;
+            app_preferences = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences.Editor editor = app_preferences.edit();
+            pcount = app_preferences.getInt("pcount",0);
+            editor.putInt("pcount",0);
+
+            ccount = app_preferences.getInt("ccount",0);
+            editor.putInt("ccount",0);
+
+            wcount = app_preferences.getInt("wcount",0);
+            editor.putInt("wcount",0);
+
+            Lcount = app_preferences.getInt("Lcount",0);
+            editor.putInt("Lcount",0);
+
+            editor.commit();
+
+        Toast.makeText(this, "All Values Reset to 0",Toast.LENGTH_LONG).show();
+    }
+
+    private void requestPermission(){
             ActivityCompat.requestPermissions(this, new String[]{READ_PHONE_STATE,ACCESS_FINE_LOCATION, CAMERA}, permsRequestCode);
 
     }
@@ -117,14 +142,12 @@ public class MainActivity extends AppCompatActivity
     pcount = app_preferences.getInt("pcount",0);
     wcount = app_preferences.getInt("wcount",0);
     Lcount = app_preferences.getInt("Lcount",0);
-    Gcount = app_preferences.getInt("Gcount",0);
 
     infoArray[0]="The Count is :"+ pcount;
     infoArray[1]="The Count is :"+ ccount;
     infoArray[2]="The Count is :"+ wcount;
     infoArray[3]="The Count is :"+ Lcount;
 
-    infoArray[4]="The Count is :"+ Gcount;
 
     customadapter whatever = new customadapter(this, nameArray, infoArray, imageArray);
     listView = (ListView) findViewById(R.id.listview);

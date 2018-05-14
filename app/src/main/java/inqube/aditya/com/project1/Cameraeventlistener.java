@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
 import static inqube.aditya.com.project1.MainActivity.ccount;
 
@@ -22,7 +21,7 @@ public class Cameraeventlistener extends BroadcastReceiver
         editor.putInt("ccount",++ccount);
         editor.commit();
 
-        Toast.makeText(context, "New Photo Clicked" + ccount, Toast.LENGTH_LONG).show();
+       // Toast.makeText(context, "New Photo Clicked" + ccount, Toast.LENGTH_LONG).show();
 
 
     }

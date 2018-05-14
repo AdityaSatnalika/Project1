@@ -8,7 +8,6 @@ import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
-import static inqube.aditya.com.project1.MainActivity.Gcount;
 import static inqube.aditya.com.project1.MainActivity.pcount;
 
 public class Receiver extends BroadcastReceiver {
@@ -17,15 +16,6 @@ public class Receiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         String S = intent.getAction();
-        if (S == "") ;
-        {  Toast.makeText(context, "Received Broadcast", Toast.LENGTH_SHORT).show();
-            SharedPreferences app_preferences;
-            app_preferences = PreferenceManager.getDefaultSharedPreferences(context);
-            Gcount = app_preferences.getInt("Gcount",0);
-            SharedPreferences.Editor editor = app_preferences.edit();
-            editor.putInt("Gcount",++Gcount);
-            editor.commit();
-        }
 
         if (S == "android.intent.action.PHONE_STATE")
         {
