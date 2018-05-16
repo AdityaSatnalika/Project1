@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import static inqube.aditya.com.project1.MainActivity.ccount;
 
-public class newserviceclas extends Service {
+public class Camera_Service extends Service {
     @Nullable
     Context context=this;
     public IBinder onBind(Intent intent) {
@@ -45,7 +45,7 @@ public class newserviceclas extends Service {
                             editor.putInt("ccount",++ccount);
                             editor.commit();
 
-                            Toast.makeText(context, "Camera Is Opened " + ccount, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Camera Is Opened " + ccount, Toast.LENGTH_SHORT).show();
                             Log.i("_____________________", "Camera " + cameraId
                                     + " is unavailable");
                         }

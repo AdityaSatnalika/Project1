@@ -12,8 +12,7 @@ import android.widget.Toast;
 
 import static inqube.aditya.com.project1.MainActivity.wcount;
 
-
-public class wifi extends BroadcastReceiver
+public class Wifi_Broadcast_Receiver extends BroadcastReceiver
 {
 
     String TAG = getClass().getSimpleName();
@@ -36,7 +35,7 @@ public class wifi extends BroadcastReceiver
 
             case WifiManager.WIFI_STATE_DISABLING:
 
-                Toast.makeText(context, "WIFI STATE DISABLED" , Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "WIFI STATE DISABLED" , Toast.LENGTH_SHORT).show();
 
                 break;
 
@@ -47,19 +46,19 @@ public class wifi extends BroadcastReceiver
                 SharedPreferences.Editor editor = app_preferences.edit();
                 editor.putInt("wcount",++wcount);
                 editor.commit();
-                Toast.makeText(context, "WIFI STATE ENABLED " + wcount, Toast.LENGTH_LONG).show();
-                Log.i("_____________________","This is wifi");
+                Toast.makeText(context, "WIFI STATE ENABLED " + wcount, Toast.LENGTH_SHORT).show();
+                Log.i("_____________________","This is Wifi_Broadcast_Receiver");
 
                 break;
 
             case WifiManager.WIFI_STATE_ENABLING:
 
-                Toast.makeText(context, "WIFI STATE ENABLING" , Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "WIFI STATE ENABLING" , Toast.LENGTH_SHORT).show();
 
                 break;
 
             case WifiManager.WIFI_STATE_UNKNOWN:
-                Toast.makeText(context, "WIFI STATE UNKNOWN" , Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "WIFI STATE UNKNOWN" , Toast.LENGTH_SHORT).show();
                 break;
         }
     }

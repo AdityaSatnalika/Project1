@@ -24,13 +24,13 @@
         </activity>
 
 
-        <receiver android:name="Receiver">
+        <receiver android:name=".Phone_Broadcast_Receiever">
             <intent-filter>
             <action android:name="android.intent.action.PHONE_STATE" />
 
             </intent-filter>
         </receiver>
-        <receiver android:name="GpsLocationReceiver"
+        <receiver android:name=".GPS_Broadcast_Receiver"
             android:exported="false" >
             <intent-filter>
                 <action android:name="android.location.PROVIDERS_CHANGED" />
@@ -41,12 +41,12 @@
         </receiver>
 
         <receiver
-            android:name="wifi" >
+            android:name=".Wifi_Broadcast_Receiver" >
             <intent-filter>
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>
-        <service android:enabled="true" android:name=".newserviceclas" />
+        <service android:enabled="true" android:name=".Camera_Service" />
 
     </application>
 

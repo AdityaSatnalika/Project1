@@ -1,5 +1,4 @@
 package inqube.aditya.com.project1;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -11,10 +10,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,10 +26,11 @@ import static android.Manifest.permission.READ_PHONE_STATE;
 public class MainActivity extends AppCompatActivity
 {
         public static int pcount=0,ccount=0,wcount=0,Lcount=0;
+        ListView listView;
         Context context=this;
-        String[] perms = {"READ_PHONE_STATE", "android.permission.CAMERA"};
-        int permsRequestCode = 200;
         String[] nameArray = {"Phone","Camera","Wifi","Location", };
+
+        int permsRequestCode = 200;
 
         public static  String[] infoArray =
             {
@@ -40,22 +42,23 @@ public class MainActivity extends AppCompatActivity
             };
 
         Integer[] imageArray =
-            {R.drawable.phone,
+            {       R.drawable.phone,
                     R.drawable.camera,
                     R.drawable.wifi,
-                     R.drawable.location};
-    ListView listView;
+                    R.drawable.location};
+
 
     @Override
-        public void onCreate(Bundle savedInstanceState)
-        {
+        public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
             setContentView(R.layout.activity_main);
 
-            startService(new Intent(this, newserviceclas.class));
-            requestPermission();
+            startService(new Intent(this, Camera_Service.class));
+            if(checkPermission()==false)
+                requestPermission();
 
-            final customadapter whatever = new customadapter(this, nameArray, infoArray, imageArray);
+            final List_Adapter whatever = new List_Adapter(this, nameArray, infoArray, imageArray);
             final SharedPreferences app_preferences;
             app_preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity
           //  EditText text = (EditText) findViewById(R.id.time);
             int i =10; //Integer.parseInt(text.getText().toString());
 
-            Intent intent = new Intent(this, Receiver.class);
+            Intent intent = new Intent(this, Phone_Broadcast_Receiever.class);
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1200202, intent, 0);
 
@@ -83,7 +86,7 @@ public class MainActivity extends AppCompatActivity
 
             alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+ (i * 1000), pendingIntent);
 
-            Toast.makeText(this, "Alarm set in " + i + " seconds",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Alarm set in " + i + " seconds",Toast.LENGTH_SHORT).show();
         }
         public void reset(View view){
             SharedPreferences app_preferences;
@@ -103,54 +106,57 @@ public class MainActivity extends AppCompatActivity
 
             editor.commit();
 
-        Toast.makeText(this, "All Values Reset to 0",Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "All Values Reset to 0",Toast.LENGTH_SHORT).show();
     }
-
-    private void requestPermission(){
+        private void requestPermission() {
             ActivityCompat.requestPermissions(this, new String[]{READ_PHONE_STATE,READ_EXTERNAL_STORAGE, ACCESS_FINE_LOCATION}, permsRequestCode);
 
     }
+        public void onResume() {
+
+        super.onResume();
+
+        SharedPreferences app_preferences;
+        app_preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        ccount = app_preferences.getInt("ccount",0);
+        pcount = app_preferences.getInt("pcount",0);
+        wcount = app_preferences.getInt("wcount",0);
+        Lcount = app_preferences.getInt("Lcount",0);
+
+        infoArray[0]="The Count is :"+ pcount;
+        infoArray[1]="The Count is :"+ ccount;
+        infoArray[2]="The Count is :"+ wcount;
+        infoArray[3]="The Count is :"+ Lcount;
 
 
-    public void onResume() {
+        List_Adapter whatever = new List_Adapter(this, nameArray, infoArray, imageArray);
+        listView = (ListView) findViewById(R.id.listview);
+        listView.setAdapter(whatever);
 
-    super.onResume();
+    }
+        private boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(getApplicationContext(), ACCESS_FINE_LOCATION);
+        int result1 = ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE);
+        int result2 = ContextCompat.checkSelfPermission(getApplicationContext(),READ_PHONE_STATE);
 
-    SharedPreferences app_preferences;
-    app_preferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-    ccount = app_preferences.getInt("ccount",0);
-    pcount = app_preferences.getInt("pcount",0);
-    wcount = app_preferences.getInt("wcount",0);
-    Lcount = app_preferences.getInt("Lcount",0);
-
-    infoArray[0]="The Count is :"+ pcount;
-    infoArray[1]="The Count is :"+ ccount;
-    infoArray[2]="The Count is :"+ wcount;
-    infoArray[3]="The Count is :"+ Lcount;
-
-
-    customadapter whatever = new customadapter(this, nameArray, infoArray, imageArray);
-    listView = (ListView) findViewById(R.id.listview);
-    listView.setAdapter(whatever);
-
-}
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED && result2 == PackageManager.PERMISSION_GRANTED;
+        }
+        @Override
+        public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 200:
-                if (grantResults.length > 0) {
-
-                    boolean readexternal = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                if (grantResults.length > 0)
+                {   boolean readexternal = grantResults[1] == PackageManager.PERMISSION_GRANTED;
                     boolean locationAccepted = grantResults[2] == PackageManager.PERMISSION_GRANTED;
                     boolean phoneAccepted=grantResults[0]==PackageManager.PERMISSION_GRANTED;
-
-                    if (locationAccepted && readexternal && phoneAccepted)
-                        Toast.makeText(this, "All Permission Granted.", Toast.LENGTH_LONG).show();
+                     if (locationAccepted && readexternal && phoneAccepted )
+                    {
+                        Toast.makeText(this, "All Permission Granted.", Toast.LENGTH_SHORT).show();
+                    }
                     else
                         {
-                        Toast.makeText(this, "Permission Denied.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Permission Denied.", Toast.LENGTH_SHORT).show();
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                         {
@@ -176,9 +182,7 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
     }
-
-
-    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(MainActivity.this)
                 .setMessage(message)
                 .setPositiveButton("OK", okListener)

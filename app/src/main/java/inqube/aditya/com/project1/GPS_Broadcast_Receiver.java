@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import static inqube.aditya.com.project1.MainActivity.Lcount;
 
-public class GpsLocationReceiver extends BroadcastReceiver {
+public class GPS_Broadcast_Receiver extends BroadcastReceiver {
     private final static String TAG = "LocationProviderChanged";
 
     boolean isGpsEnabled;
@@ -21,7 +21,7 @@ public class GpsLocationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().matches("android.location.PROVIDERS_CHANGED") || intent.getAction().matches("com.google.android.apps.photos"))
         {
-            Toast.makeText(context,"Location Providers changed",Toast.LENGTH_LONG).show();
+            Toast.makeText(context,"Location Providers changed",Toast.LENGTH_SHORT).show();
 
             SharedPreferences app_preferences;
             app_preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -36,7 +36,7 @@ public class GpsLocationReceiver extends BroadcastReceiver {
 
             //Start your Activity if location was enabled:
             if (isGpsEnabled || isNetworkEnabled) {
-                Toast.makeText(context,"Both Enabled",Toast.LENGTH_LONG).show();
+                Toast.makeText(context,"Both Enabled",Toast.LENGTH_SHORT).show();
                 Log.i("_____________________","This is network");
             }
         }

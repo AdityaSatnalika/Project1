@@ -8,14 +8,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class customadapter extends ArrayAdapter
+public class List_Adapter extends ArrayAdapter
 {
     private final Activity context;
     private final Integer[] imageIDarray;
     private final String[] nameArray;
     private final String[] infoArray;
 
-    public customadapter(Activity context, String[] nameArrayParam, String[] infoArrayParam, Integer[] imageIDArrayParam){
+    public List_Adapter(Activity context, String[] nameArrayParam, String[] infoArrayParam, Integer[] imageIDArrayParam){
 
         super(context,R.layout.rowview , nameArrayParam);
         this.context=context;

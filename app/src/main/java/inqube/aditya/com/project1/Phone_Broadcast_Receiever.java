@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import static inqube.aditya.com.project1.MainActivity.pcount;
 
-public class Receiver extends BroadcastReceiver {
+public class Phone_Broadcast_Receiever extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
