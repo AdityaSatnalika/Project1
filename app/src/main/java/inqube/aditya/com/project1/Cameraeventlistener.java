@@ -21,7 +21,7 @@ public class Cameraeventlistener extends BroadcastReceiver
         editor.putInt("ccount",++ccount);
         editor.commit();
 
-       // Toast.makeText(context, "New Photo Clicked" + ccount, Toast.LENGTH_LONG).show();
+       // Toast.makeText(context, "New Photo Clicked" + ccount, Toast.LENGTH_SHORT).show();
 
 
     }
